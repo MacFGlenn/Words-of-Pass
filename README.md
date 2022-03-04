@@ -1,2 +1,1 @@
-# Words-of-Pass
-Password generator
+# Password Generator Starter Code
