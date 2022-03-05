@@ -3,6 +3,7 @@ var password = {
   value: "",
   length: 128,
   charSet: "",
+  charSetIs: false,
   lowercase: "abcdefghijklmnopqrstuvwxyz",
   uppercase: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
   numeric: "0123456789",
@@ -28,6 +29,7 @@ var password = {
     );
     if (lowercasePrompt) {
       password.charSet = password.lowercase;
+      password.charSetIs = true;
     }
   },
   uppercasePrompt: function () {
@@ -58,6 +60,7 @@ var password = {
 
 var generatePassword = function () {
   password.value = "";
+  password.charSet = "";
 
   password.lengthPrompt();
   password.lowercasePrompt();
@@ -65,15 +68,21 @@ var generatePassword = function () {
   password.numericPrompt();
   password.specialPrompt();
 
-  for (var i = 0; i <= password.length; i++) {
-    var randomNumber = Math.floor(Math.random() * password.charSet.length);
-    password.value += password.charSet.substring(
-      randomNumber,
-      randomNumber + 1
-    );
+  if (password.charSetIs) {
+    for (var i = 0; i <= password.length; i++) {
+      var randomNumber = Math.floor(Math.random() * password.charSet.length);
+      password.value += password.charSet.substring(
+        randomNumber,
+        randomNumber + 1
+      );
+    }
+    console.log(password.value);
+    return password.value;
+  } else {
+    password.value = "";
+    window.alert("Please pick at least one character type.");
+    generatePassword();
   }
-  console.log(password.value);
-  return password.value;
 };
 
 // Get references to the #generate element
